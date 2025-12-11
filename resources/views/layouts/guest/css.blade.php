@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="{{asset('assets-guest/ganci.css')}}">
