@@ -387,12 +387,12 @@
         <div class="hero-text">
             <h1 class="hero-title">Croppy.co Amigurumi</h1>
             <p class="hero-subtitle" id="typed-subtitle"></p>
-            
+
             <p class="hero-description">
                 Kami menyediakan boneka rajut (amigurumi) dan gantungan kunci 
                 handmade yang lucu, estetik, dan cocok buat kado orang tersayang.
             </p>
-            
+
             <a href="{{ route('front.products') }}" class="btn-primary" id="lihatKoleksiBtn">Lihat Koleksi</a>
         </div>
         <div class="hero-image">
@@ -405,12 +405,12 @@
 
 <!-- Produk Section -->
 <section id="produk" class="produk">
-    <div class="container">
+    <div class="container"> 
         <h2 class="section-title" data-aos="fade-up">Koleksi Kami</h2>
         <p class="section-subtitle" data-aos="fade-up">Pilih Gantungan Kunci favoritmu!</p>
         <div class="produk-grid" id="produkGrid">
 
-        @foreach($products as $product)
+        @foreach($products->take(3) as $product)
         <div class="produk-card" data-aos="zoom-in">
             <div class="card-image">
                 @if($product->image)
@@ -446,6 +446,9 @@
         </div>
         @endforeach
 
+        </div>
+        <div style="text-align:center; margin-top: 22px;">
+            <a href="{{ route('front.products') }}" class="btn-primary" style="background:#fff;color:#e91e63;border:1px solid #e91e63;">Lihat Semua Produk</a>
         </div>
     </div>
 </section>
