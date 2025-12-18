@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         // --- MULAI KODE BARU ---
         // Cek Role User
-        if (auth()->user()->role === 'admin') {
+        if ($request->user()->role === 'admin') {
             // Kalau Admin, lempar ke Dashboard Admin
             return redirect()->intended(route('dashboard'));
         }

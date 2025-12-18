@@ -85,6 +85,12 @@
             </div>
 
             <button type="submit" class="btn-login">Masuk Sekarang</button>
+            <div style="margin-top: 20px; text-align: center;">
+    <p>Atau masuk dengan:</p>
+    <a href="{{ route('google.login') }}" style="background-color: #db4437; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+        🇬 Google
+    </a>
+</div>
         </form>
 
         <div class="links">
