@@ -7,6 +7,7 @@
         <nav class="nav" style="display: flex; align-items: center; gap: 18px;">
             <a href="/" class="nav-link">Home</a>
             <a href="/produk" class="nav-link">Produk</a>
+            <a href="{{ route('orders.index') }}" class="nav-link">Pesanan Saya 📦</a>
             
             @auth
                 <a href="{{ route('carts.index') }}" class="nav-link" style="color: #e91e63; font-weight: bold; position: relative;">

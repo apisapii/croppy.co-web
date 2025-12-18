@@ -63,9 +63,12 @@
                     $waText .= "Total: Rp " . number_format($total);
                 @endphp
                 
-                <a href="https://wa.me/6281234567890?text={{ $waText }}" class="btn-checkout">
-                    Checkout ke WhatsApp ➡
-                </a>
+                <form action="{{ route('checkout') }}" method="POST" style="display: inline;">
+    @csrf
+    <button type="submit" class="btn-checkout" style="cursor: pointer; border: none; font-family: inherit; font-size: 1rem;">
+        Bayar Sekarang (Transfer) 💳
+    </button>
+</form>
             </div>
         @endif
     </div>

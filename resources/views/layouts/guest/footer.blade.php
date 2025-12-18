@@ -2,7 +2,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <span class="logo-icon"><img src="img/Logo.png" alt="logo-site" width="240"></span>
+                    <span class="logo-icon"><img src="{{asset('assets-guest/img/Logo.png')}}" alt="logo-site" width="240"></span>
                     <span class="logo-text">Croppy.co</span>
                 </div>
                 <div class="social-links">
