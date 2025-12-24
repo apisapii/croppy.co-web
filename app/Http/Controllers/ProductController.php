@@ -72,7 +72,24 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with('reviews.user')->findOrFail($id);
+    
+    // 👇 LOGIKA CEK PEMBELIAN
+    $hasPurchased = false;
+
+    if (Auth::check()) {
+        // Cek: Cari order punya user ini, yang statusnya 'Paid', 
+        // dan di dalamnya ada produk yang sedang dilihat.
+        $hasPurchased = Order::where('user_id', Auth::id())
+            ->where('status', 'Paid') // Pastikan tulisannya sama kayak di Admin ('Paid' atau 'Lunas')
+            ->whereHas('items', function ($query) use ($id) {
+                $query->where('product_id', $id);
+            })
+            ->exists();
+    }
+
+    // Kirim variabel $hasPurchased ke view
+    return view('guest.products', compact('product', 'hasPurchased'));
     }
 
     /**

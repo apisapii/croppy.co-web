@@ -215,6 +215,125 @@
     }
     .chat-wa-btn:hover { background: #128c7e; }
 
+    /* --- Review Section Minimalis --- */
+    .card-review-wrap {
+        margin-top:40px; 
+        border-top: 1px solid #eee; 
+        padding-top: 13px;
+        padding-bottom: 5px;
+    }
+    .review-summary {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #e91e63;
+        font-size: 1.05rem;
+    }
+    .review-star {
+        color: #ffd81c;
+        font-size: 1.2em;
+    }
+    .reviews-list-min {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+    .review-item {
+        background: #fff7fc;
+        border-radius: 9px;
+        padding: 11px 13px;
+        font-size: 0.97em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 2px 8px #ffe4f02a;
+    }
+    .review-avatar {
+        background: #ffe7f5;
+        color: #e91e63;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1em;
+    }
+    .review-content {
+        flex: 1;
+    }
+    .review-user {
+        font-weight: 600;
+        font-size: 0.98em;
+        color: #e91e63;
+        margin-right: 5px;
+    }
+    .review-date {
+        font-size: 0.87em;
+        color: #aaa;
+        margin-left: 8px;
+        font-weight: 400;
+    }
+    .review-rating {
+        color: #ffd600;
+        font-size: 0.91em;
+        margin-right: 5px;
+    }
+    .no-review-hint {
+        color: #aaa;
+        font-size: 0.97em;
+        margin-bottom: 7px;
+        text-align: center;
+    }
+    .review-form-minimal {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-bottom: 13px;
+        margin-top: 6px;
+    }
+    .review-form-minimal select,
+    .review-form-minimal textarea {
+        font-family: inherit;
+        border: 1.2px solid #ffd0ea;
+        border-radius: 21px;
+        padding: 8px 11px;
+        font-size: 0.99em;
+    }
+    .review-form-minimal textarea {
+        resize: none;
+        min-width: 90px;
+        width: 100%;
+        min-height: 30px;
+        max-height: 60px;
+    }
+    .review-form-minimal button {
+        background: #e91e63;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 7px 17px;
+        font-weight: 700;
+        font-size: 1em;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .review-form-minimal button:hover {
+        background: #be1751;
+    }
+    .review-lock {
+        background: #fff7d2;
+        color: #9a8300;
+        font-size: 0.98em;
+        border-radius: 7px;
+        padding: 8px 12px;
+        text-align: center;
+        margin-bottom: 8px;
+        margin-top: 4px;
+    }
     @media (max-width: 950px) {
         .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
     }
@@ -299,6 +418,73 @@
                             <img src="{{ asset('img/default.jpg') }}" alt="No Image">
                         @endif
                     </div>
+                    <!-- Review Section Minimalis dan Menarik -->
+                    <div class="card-review-wrap">
+                        <div class="review-summary">
+                            @php
+                                $reviewAvg = $product->reviews->avg('rating');
+                                $reviewCount = $product->reviews->count();
+                            @endphp
+                            <span class="review-star">★</span>
+                            <span>
+                                {{ number_format($reviewAvg,1) ?: '0' }}
+                            </span>
+                            <span style="color:#b39ddb;font-size:0.98em;">({{ $reviewCount }} ulasan)</span>
+                        </div>
+                        @auth
+                            @php
+                                $hasPurchased = isset($hasPurchasedProductIds)
+                                    ? $hasPurchasedProductIds->contains($product->id)
+                                    : false;
+                            @endphp
+                            @if($hasPurchased)
+                                <form action="{{ route('reviews.store') }}" method="POST" class="review-form-minimal">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <select name="rating" style="min-width:48px;">
+                                        <option value="5">5★</option>
+                                        <option value="4">4★</option>
+                                        <option value="3">3★</option>
+                                        <option value="2">2★</option>
+                                        <option value="1">1★</option>
+                                    </select>
+                                    <textarea name="comment" rows="1" maxlength="150" placeholder="Tulis ulasan singkat..."></textarea>
+                                    <button type="submit">Kirim</button>
+                                </form>
+                            @else
+                                <div class="review-lock">
+                                    🔒 <b>Kamu harus beli dulu untuk review</b>
+                                </div>
+                            @endif
+                        @else
+                            <div class="no-review-hint"><a href="{{ route('login') }}" style="color:#e91e63;font-weight:600;">Login</a> untuk kasih ulasan</div>
+                        @endauth
+
+                        <div class="reviews-list-min">
+                            @forelse($product->reviews->sortByDesc('created_at')->take(2) as $review)
+                                <div class="review-item">
+                                    <div class="review-avatar">
+                                        {{ strtoupper(substr($review->user->name,0,1)) }}
+                                    </div>
+                                    <div class="review-content">
+                                        <span class="review-user">{{ strtok($review->user->name,' ') }}</span>
+                                        <span class="review-rating">{{ str_repeat('★', $review->rating) }}</span>
+                                        <span style="color:#666;">{{ $review->comment }}</span>
+                                        <span class="review-date">{{ $review->created_at->diffForHumans() }}</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="no-review-hint">Belum ada ulasan, yuk jadi yang pertama!</div>
+                            @endforelse
+                            @if($product->reviews->count() > 2)
+                                <div style="text-align: right; margin-top:2px;">
+                                    <span style="font-size:0.98em;color:#888;">dan {{ $product->reviews->count()-2 }} ulasan lainnya</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <!-- End Review Section -->
+
                     <div class="card-content">
                         <div>
                             <div class="card-cat">{{ $product->category->name }}</div>

@@ -4,11 +4,12 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontProductController;
-use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\Admin\OrderAdminController;
 
 // =========================
@@ -24,6 +25,8 @@ Route::get('/', function () {
 
 // (Tambahkan jika ada guest/public lain, misal katalog depan)
 Route::get('/produk', [FrontProductController::class, 'index'])->name('front.products');
+
+Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);

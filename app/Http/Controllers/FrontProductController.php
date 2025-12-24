@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontProductController extends Controller
 {
@@ -32,7 +34,23 @@ class FrontProductController extends Controller
         // 5. Ambil semua kategori buat tombol filter
         $categories = Category::all();
 
-        return view('guest.products', compact('products', 'categories'));
+        // 6. Cek produk yang sudah pernah dibeli user (untuk izin review)
+        $hasPurchasedProductIds = collect();
+        if (Auth::check() && $products->isNotEmpty()) {
+            $productIds = $products->pluck('id');
+            $hasPurchasedProductIds = Order::where('user_id', Auth::id())
+                ->where('status', 'Paid')
+                ->whereHas('items', function ($query) use ($productIds) {
+                    $query->whereIn('product_id', $productIds);
+                })
+                ->with('items')
+                ->get()
+                ->flatMap->items
+                ->pluck('product_id')
+                ->unique();
+        }
+
+        return view('guest.products', compact('products', 'categories', 'hasPurchasedProductIds'));
     }
 
     /**
