@@ -3,6 +3,7 @@
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ReviewController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontProductController;
+use App\Http\Controllers\GuestProfileController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 
 // =========================
@@ -25,16 +28,23 @@ Route::get('/', function () {
 
 // (Tambahkan jika ada guest/public lain, misal katalog depan)
 Route::get('/produk', [FrontProductController::class, 'index'])->name('front.products');
-
+Route::get('/kontak', [PageController::class, 'contact'])->name('pages.contact');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+// Route untuk update resi
+Route::post('/admin/orders/{id}/resi', [OrderAdminController::class, 'updateResi'])->name('admin.orders.updateResi');
+
 // =========================
 // AUTHENTICATED USER ROUTES
 // =========================
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/my-profile', [GuestProfileController::class, 'index'])->name('guest.profile.index');
+    Route::post('/my-profile', [GuestProfileController::class, 'update'])->name('guest.profile.update');
+    
     // Profil User
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -62,9 +72,7 @@ Route::get('/pembayaran/{order}', function ($orderId) {
 // ADMIN ROUTES
 // =========================
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard'); // Arahkan ke folder admin/dashboard kamu
-    })->middleware('verified')->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Daftar order untuk admin
     Route::get('/orders', [OrderAdminController::class, 'index'])->name('admin.orders.index');
     // Update status order oleh admin

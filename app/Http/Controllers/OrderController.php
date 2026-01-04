@@ -45,15 +45,12 @@ public function checkout(Request $request)
             // A. Bikin Order Utama (Kepalanya)
             $order = Order::create([
                 'user_id' => Auth::id(),
-                
-                // TAMBAHKAN BARIS INI 👇
-                'name' => Auth::user()->name, 
-                'phone' => '08123456789',
-                'address' => 'Alamat Belum Diisi',
-                
-                'total_price' => $totalPrice,
-                'status' => 'Pending',
-                'payment_method' => 'Transfer Bank',
+    'name' => Auth::user()->name,
+    'phone' => Auth::user()->phone,     // <--- DATA ASLI
+    'address' => Auth::user()->address, // <--- DATA ASLI
+    'total_price' => $totalPrice,
+    'status' => 'Pending',
+    'payment_method' => 'Transfer Bank',
             ]);
 
             // B. Pindahkan Item Keranjang ke OrderItems (Rinciannya)

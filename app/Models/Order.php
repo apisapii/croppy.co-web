@@ -19,6 +19,7 @@ class Order extends Model
         'total_price',
         'status',
         'payment_method',
+        'resi',
     ];
 
     // Hubungan ke User
@@ -26,7 +27,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    
     // Hubungan ke Item Barang
     public function items()
     {

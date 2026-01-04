@@ -12,8 +12,8 @@ class OrderAdminController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        // Kita ambil data Order BESERTA data User-nya (Eager Loading)
-        $orders = Order::with('user')->latest()->get();
+        // Kita ambil data Order BESERTA data User dan Items-nya (Eager Loading)
+        $orders = Order::with(['user', 'items.product'])->latest()->get();
         return view('admin.orders.index', compact('orders'));
     }
 
@@ -53,6 +53,23 @@ class OrderAdminController extends Controller
     {
         //
     }
+
+    public function updateResi(Request $request, $id)
+{
+    $request->validate([
+        'resi' => 'required|string|max:50|min:5',
+    ]);
+
+    $order = Order::findOrFail($id);
+
+    // Update resi DAN ubah status jadi 'Shipped' otomatis
+    $order->update([
+        'resi' => $request->resi,
+        'status' => 'Shipped' // Pastikan status ini konsisten
+    ]);
+
+    return back()->with('success', 'Resi berhasil diinput! Status berubah jadi Dikirim 🚚');
+}
 
     /**
      * Update the specified resource in storage.

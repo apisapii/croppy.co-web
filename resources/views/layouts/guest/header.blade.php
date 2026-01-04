@@ -1,100 +1,104 @@
-<header class="header">
-    <div class="container">
-        <div class="logo">
-            <span class="logo-icon"><img src="{{asset('assets-guest/img/Logo.png')}}" alt="logo-site" width="240"></span>
-            <span class="logo-text">Croppy.co</span>
+<header class="header" style="background: white; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; max-width: 1200px; margin: 0 auto;">
+        
+        <div style="display: flex; align-items: center; gap: 40px;">
+            <a href="/" class="logo" style="text-decoration: none; display: flex; align-items: center;">
+                <img src="{{asset('assets-guest/img/Logo.png')}}" alt="Croppy Logo" style="height: 45px; width: auto;">
+            </a>
+
+            <nav class="nav-links d-none d-md-flex" style="display: flex; gap: 25px;">
+                <a href="/" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
+                    Home
+                </a>
+                <a href="/produk" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
+                    Produk
+                </a>
+                <a href="{{ route('pages.contact') }}" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
+                    Kontak
+                </a>
+            </nav>
         </div>
-        <nav class="nav" style="display: flex; align-items: center; gap: 18px;">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/produk" class="nav-link">Produk</a>
-            <a href="{{ route('orders.index') }}" class="nav-link">Pesanan Saya 📦</a>
+
+        <div class="nav-icons" style="display: flex; align-items: center; gap: 20px;">
             
             @auth
-                <a href="{{ route('carts.index') }}" class="nav-link" style="color: #e91e63; font-weight: bold; position: relative;">
-                    Keranjang 🛒
-                    @php
-                        $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity');
-                    @endphp
-                    @if($cartCount > 0)
-                        <span style="
-                            background-color: white; 
-                            color: #e91e63; 
-                            border-radius: 50%; 
-                            padding: 2px 6px; 
-                            font-size: 12px; 
-                            font-weight: bold;
-                            margin-left: 5px;
-                            border: 1px solid #e91e63;
-                            vertical-align: text-top;
-                        ">
-                            {{ $cartCount }}
-                        </span>
-                    @endif
+                <a href="{{ route('orders.index') }}" title="Pesanan Saya" style="color: #333; transition: 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="width: 24px; height: 24px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                    </svg>
                 </a>
-                <!-- Dropdown User Menu -->
-                <div class="dropdown" style="display:inline-block; position:relative;">
-                    <button class="nav-link" style="background:none; border:none; cursor:pointer;display: flex;align-items: center;gap:4px; font-size: 1rem;" id="userDropdownBtn">
-                        {{ Auth::user()->name ?? 'User' }}
-                        <svg style="height:1em;width:1em;" viewBox="0 0 20 20"><path fill="#111" d="M5.25 8.5L10 13.25L14.75 8.5H5.25Z"></path></svg>
+
+                <div class="dropdown" style="position:relative;">
+                    <button id="userDropdownBtn" style="background:none; border:none; cursor:pointer; padding: 0; display: flex; align-items: center;">
+                        @if(Auth::user()->avatar)
+                            <img src="{{ Auth::user()->avatar }}" alt="Profil" 
+                                 style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
+                        @else
+                            <div style="width: 32px; height: 32px; background: #333; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 14px;">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </div>
+                        @endif
                     </button>
-                    <ul class="dropdown-menu" id="userDropdownMenu" style="min-width:130px;position:absolute;right:0;top:100%;background:#fff;border:1px solid #eee; box-shadow: 0 3px 14px rgba(0,0,0,0.07);padding:0;margin:0;list-style:none;display:none;z-index:9;border-radius: 7px;overflow:hidden;">
-                        <li style="border-bottom:1px solid #f2f2f2;">
-                            <span style="display:block;padding:10px 18px; color: #555;">
-                                👤 <b>{{ Auth::user()->name ?? 'User' }}</b>
-                            </span>
+
+                    <ul class="dropdown-menu" id="userDropdownMenu" style="min-width:180px; position:absolute; right:0; top:130%; background:#fff; border:1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding:0; margin:0; list-style:none; display:none; z-index:999; border-radius: 10px; overflow:hidden;">
+                        <li style="border-bottom:1px solid #f5f5f5; padding: 15px;">
+                            <span style="display: block; font-weight: bold; font-size: 14px; color: #333;">{{ Str::limit(Auth::user()->name, 15) }}</span>
+                            <span style="font-size: 11px; color: #888;">{{ Str::limit(Auth::user()->email, 20) }}</span>
                         </li>
+                        <li><a href="{{ route('guest.profile.index') }}" style="display:block; padding:12px 15px; color:#555; text-decoration:none; font-size: 14px;">👤 Profil Saya</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                                 @csrf
-                                <button type="submit" style="background:none; border:none; width:100%; text-align:left; padding:10px 18px; color:#e91e63; cursor:pointer; font-weight: bold;">
-                                    Logout
-                                </button>
+                                <button type="submit" style="background:none; border:none; width:100%; text-align:left; padding:12px 15px; color:#e91e63; cursor:pointer; font-weight: 600; font-size: 13px;">🚪 Logout</button>
                             </form>
                         </li>
                     </ul>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const btn = document.getElementById('userDropdownBtn');
-                        const menu = document.getElementById('userDropdownMenu');
-                        document.addEventListener('click', function(e) {
-                            if (btn && btn.contains(e.target)) {
-                                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-                            } else if(menu && !menu.contains(e.target)) {
-                                menu.style.display = 'none';
-                            }
-                        });
-                    });
-                </script>
+
+                <a href="{{ route('carts.index') }}" title="Keranjang" style="color: #333; position: relative; margin-left: 5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" style="width: 24px; height: 24px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                    </svg>
+                    @php $cartCount = \App\Models\Cart::where('user_id', auth()->id())->sum('quantity'); @endphp
+                    @if($cartCount > 0)
+                        <span style="position: absolute; top: -5px; right: -8px; background: #e91e63; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; border: 2px solid white;">{{ $cartCount }}</span>
+                    @endif
+                </a>
+
             @else
-                <div class="dropdown" style="display:inline-block; position:relative;">
-                    <button class="nav-link" style="background:none; border:none; cursor:pointer;display: flex;align-items: center;gap:4px; font-size: 1rem;" id="guestDropdownBtn">
-                        Akun
-                        <svg style="height:1em;width:1em;" viewBox="0 0 20 20"><path fill="#111" d="M5.25 8.5L10 13.25L14.75 8.5H5.25Z"></path></svg>
-                    </button>
-                    <ul class="dropdown-menu" id="guestDropdownMenu" style="min-width:130px;position:absolute;right:0;top:100%;background:#fff;border:1px solid #eee; box-shadow: 0 3px 14px rgba(0,0,0,0.07);padding:0;margin:0;list-style:none;display:none;z-index:9;border-radius: 7px;overflow:hidden;">
-                        <li>
-                            <a href="{{ route('login') }}" class="nav-link" style="display:block;padding:10px 18px; color: #555; text-decoration:none;">Login</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('register') }}" class="nav-link" style="display:block;padding:10px 18px; color: #e91e63; text-decoration:none; font-weight: bold;">Daftar</a>
-                        </li>
-                    </ul>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <a href="{{ route('login') }}" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px;">Masuk</a>
+                    <span style="color: #ddd;">|</span>
+                    <a href="{{ route('register') }}" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px;">Daftar</a>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const btnGuest = document.getElementById('guestDropdownBtn');
-                        const menuGuest = document.getElementById('guestDropdownMenu');
-                        document.addEventListener('click', function(e) {
-                            if (btnGuest && btnGuest.contains(e.target)) {
-                                menuGuest.style.display = (menuGuest.style.display === 'block') ? 'none' : 'block';
-                            } else if(menuGuest && !menuGuest.contains(e.target)) {
-                                menuGuest.style.display = 'none';
-                            }
-                        });
-                    });
-                </script>
             @endauth
-        </nav>
+
+        </div>
     </div>
 </header>
+
+<style>
+    @media (max-width: 768px) {
+        .d-none { display: none !important; } /* Sembunyikan menu teks di HP */
+        .container { padding: 15px; } /* Padding lebih kecil di HP */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('userDropdownBtn');
+        const menu = document.getElementById('userDropdownMenu');
+
+        if(btn && menu){
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            });
+            document.addEventListener('click', function(e) {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>

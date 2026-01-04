@@ -104,11 +104,17 @@
         font-size: 1.15rem;
     }
 
+    .address-cell {
+        max-width: 250px;
+        word-wrap: break-word;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
         .orders-container { padding: 36px 2px 24px 2px; }
         .orders-table th, .orders-table td { padding: 8px; font-size: 0.92rem; }
         .orders-title { font-size: 1.2rem; }
+        .address-cell { max-width: 150px; font-size: 0.85rem; }
     }
 </style>
 
@@ -140,6 +146,7 @@
                 <th>Order ID</th>
                 <th>Waktu Pemesanan</th>
                 <th>Pelanggan</th>
+                <th>Alamat Pengiriman</th>
                 <th>Rincian Barang</th>
                 <th>Total Bayar</th>
                 <th>Status Saat Ini</th>
@@ -155,8 +162,19 @@
                 </td>
                 <td>
                     <span style="font-weight:600; color:#7b1fa2;">
-                        {{ $order->user->name }}
+                        {{ $order->name }}
                     </span>
+                    <br>
+                    <small style="color:#888; font-size:0.85rem;">
+                        <i class="fas fa-phone-alt"></i> {{ $order->phone }}
+                    </small>
+                </td>
+                <td>
+                    <div style="max-width: 250px; font-size: 0.9rem; color: #555; line-height: 1.5;">
+                        <i class="fas fa-map-marker-alt" style="color: #e91e63; margin-right: 6px;"></i>
+                        <strong style="color: #333;">Alamat:</strong><br>
+                        {{ $order->address }}
+                    </div>
                 </td>
                 <td>
                     <ul class="order-items-list" style="padding-left:8px; margin:0;">
@@ -187,20 +205,54 @@
                     </span>
                 </td>
                 <td>
-                    <form class="action-form" action="{{ route('admin.orders.update', $order->id) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-                        <select name="status" onchange="this.form.submit()">
-                            <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="Paid" {{ $order->status == 'Paid' ? 'selected' : '' }}>Lunas</option>
-                            <option value="Shipped" {{ $order->status == 'Shipped' ? 'selected' : '' }}>Dikirim</option>
-                        </select>
-                    </form>
+                    <div style="display: flex; gap: 7px; align-items: center;">
+                        <form class="action-form" action="{{ route('admin.orders.update', $order->id) }}" method="POST" style="margin-right:0;">
+                            @csrf
+                            @method('PATCH')
+                            <select name="status" onchange="this.form.submit()">
+                                <option value="Pending" {{ $order->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="Paid" {{ $order->status == 'Paid' ? 'selected' : '' }}>Lunas</option>
+                                <option value="Shipped" {{ $order->status == 'Shipped' ? 'selected' : '' }}>Dikirim</option>
+                            </select>
+                        </form>
+
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalResi{{ $order->id }}">
+                            <i class="fas fa-truck"></i> Resi
+                        </button>
+                    </div>
+                    
+                    <!-- Modal untuk input resi -->
+                    <div class="modal fade" id="modalResi{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Input Resi Pengiriman 🚚</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('admin.orders.updateResi', $order->id) }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <p>Masukkan nomor resi untuk Order <b>#{{ $order->id }}</b>.</p>
+                                        <div class="form-group">
+                                            <label>Nomor Resi / AWB</label>
+                                            <input type="text" name="resi" class="form-control" placeholder="Contoh: JP1234567890" value="{{ $order->resi }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-primary">Simpan & Kirim</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             @empty
             <tr>
-                <td colspan="7" class="empty-orders">
+                <td colspan="8" class="empty-orders">
                     <i class="fas fa-clipboard-list" style="font-size:2.2em; color: #d1aeeb;"></i>
                     <br>
                     Belum ada pesanan baru. Semangat berjualan! 🚀

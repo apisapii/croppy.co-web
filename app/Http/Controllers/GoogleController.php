@@ -26,7 +26,7 @@ class GoogleController extends Controller
 
             if ($user) {
                 // Kalau user udah ada, langsung update google_id (kalau belum ada) & login
-                $user->update(['google_id' => $googleUser->id]);
+                $user->update(['google_id' => $googleUser->id, 'avatar' => $googleUser->avatar]);
                 Auth::login($user);
             } else {
                 // Kalau user baru, kita daftarkan otomatis
@@ -36,6 +36,7 @@ class GoogleController extends Controller
                     'google_id' => $googleUser->id,
                     // Kalau tabel users punya kolom role, pastikan default-nya customer/guest
                     'role' => 'customer',
+                    'avatar' => $googleUser->avatar,
                     'password' => bcrypt(Str::random(16)), // Password acak karena login pake Google
                 ]);
                 Auth::login($newUser);
