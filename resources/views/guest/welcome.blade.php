@@ -636,7 +636,7 @@
                             <span style="font-size:1.05em;">🔒</span> Login dulu yuk
                         </a>
                     @endauth
-                    <a href="https://wa.me/6281234567890?text=Halo%20Croppy%2C%20saya%20mau%20order%20produk:%20{{ urlencode($product->name) }}%20harga%20Rp%20{{ number_format($product->price, 0, ',', '.') }}" 
+                    <a href="https://wa.me/6282364368541?text=Halo%20Croppy%2C%20saya%20mau%20order%20produk:%20{{ urlencode($product->name) }}%20harga%20Rp%20{{ number_format($product->price, 0, ',', '.') }}" 
                         class="btn-card wa" target="_blank"
                         title="Chat WhatsApp">
                         <span style="font-size:1.05em;">💬</span> Chat WA
@@ -648,8 +648,7 @@
         @endforeach
         </div>
         <div style="text-align:center; margin-top: 22px;">
-            <a href="{{ route('front.products') }}" class="btn-primary" 
-            style="background:#fff;color:#e91e63;border:1px solid #e91e63;">
+            <a href="{{ route('front.products') }}" class="btn-primary" >
             <span style="font-size:1.1em;">🧺</span> Lihat Semua Produk</a>
         </div>
     </div>
@@ -686,75 +685,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimoni Section - Bubble carousel & interaktiv -->
-<section id="testimoni" class="testimoni-section">
-    <div class="container">
-        <h2 class="testimoni-title">Testimoni Pelanggan</h2>
-        <p class="testimoni-subtitle">Apa kata mereka tentang Croppy.co?</p>
-        <div class="testimoni-list" id="testimoniList">
-            <div class="testimoni-card active" data-aos="fade-up">
-                <div class="testimoni-user">
-                    <img class="testimoni-user-img" src="https://i.pravatar.cc/150?img=36" alt="user1">
-                    <div class="testimoni-user-info">
-                        <span class="testimoni-username">Siti Nurhasanah</span>
-                        <span class="testimoni-rating" title="5 bintang">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="testimoni-text">
-                    Sangat puas! Boneka topp banget dan pengiriman cepat.
-                    Ownernya ramah juga, pesanan bisa custom.<span> 💖</span>
-                </div>
-            </div>
-            <div class="testimoni-card" data-aos="fade-up" data-aos-delay="80">
-                <div class="testimoni-user">
-                    <img class="testimoni-user-img" src="https://i.pravatar.cc/150?img=11" alt="user2">
-                    <div class="testimoni-user-info">
-                        <span class="testimoni-username">Agus Prabowo</span>
-                        <span class="testimoni-rating" title="5 bintang">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="testimoni-text">
-                    Hasil rajutan rapi dan lucu, anakku senang banget. Terima kasih, Croppy! <span>🧶</span>
-                </div>
-            </div>
-            <div class="testimoni-card" data-aos="fade-up" data-aos-delay="160">
-                <div class="testimoni-user">
-                    <img class="testimoni-user-img" src="https://i.pravatar.cc/150?img=7" alt="user3">
-                    <div class="testimoni-user-info">
-                        <span class="testimoni-username">Maria Putri</span>
-                        <span class="testimoni-rating" title="5 bintang">
-                            <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="testimoni-text">
-                    Lucuuu parah! Cocok banget buat hadiah dan kualitas benangnya bagus. <span>😍</span>
-                </div>
-            </div>
-            <div class="testimoni-card" data-aos="fade-up" data-aos-delay="240">
-                <div class="testimoni-user">
-                    <img class="testimoni-user-img" src="https://i.pravatar.cc/150?img=25" alt="user4">
-                    <div class="testimoni-user-info">
-                        <span class="testimoni-username">Indra Maulana</span>
-                        <span class="testimoni-rating" title="4 bintang">★ ★ ★ ★ ☆</span>
-                    </div>
-                </div>
-                <div class="testimoni-text">
-                    Packaging aman, barang sampai mulus. Akan repeat order lagi pasti! <span>🧸</span>
-                </div>
-            </div>
-        </div>
-        <div style="text-align:center;margin-top:19px;">
-            <button id="prevTesti" class="btn-primary" style="background:#fff;border:1.5px solid #e91e63;color:#e91e63;padding:8px 19px;font-size:1rem;border-radius:41px;margin-right:12px;">&#60; </button>
-            <button id="nextTesti" class="btn-primary" style="background:#fff;border:1.5px solid #e91e63;color:#e91e63;padding:8px 19px;font-size:1rem;border-radius:41px;"> &#62;</button>
         </div>
     </div>
 </section>

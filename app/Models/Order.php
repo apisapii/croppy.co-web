@@ -20,6 +20,7 @@ class Order extends Model
         'status',
         'payment_method',
         'resi',
+        'payment_proof',
     ];
 
     // Hubungan ke User

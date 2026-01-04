@@ -17,8 +17,8 @@
         <h2 style="font-size: 2rem;">Rp {{ number_format($order->total_price) }}</h2>
 
         <p>Ke Rekening BCA:</p>
-        <div class="rek">123 - 456 - 7890</div>
-        <p>a.n <strong>Croppy Official</strong></p>
+        <div class="rek">139 - 369 - 3715</div>
+        <p>a.n <strong>Muhammad Hafiz Ramadhan</strong></p>
 
         <hr>
         <p style="font-size: 0.9rem; color: #666;">

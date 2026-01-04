@@ -12,37 +12,41 @@
                 <h4 style="font-weight: bold; margin-bottom: 25px; color: #333;">Informasi Kontak</h4>
 
                 <div style="display: flex; align-items: start; margin-bottom: 25px;">
-                    <div style="background: #e7fbe7; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                        <i class="fab fa-whatsapp" style="font-size: 24px; color: #25D366;"></i>
+                    <div style="background: #e7fbe7; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 17px; margin-top: 2px; font-size: 22px;">
+                        🟢
+                        <span style="position: absolute; font-size: 18px; margin-top: 2px; color: #25D366;">📱</span>
                     </div>
                     <div>
-                        <h6 style="font-weight: bold; margin: 0;">WhatsApp</h6>
-                        <p style="color: #666; margin: 5px 0;">0823-6436-8541</p>
-                        <a href="https://wa.me/6282364368541?text=Halo%20Admin%20Croppy,%20saya%20mau%20tanya%20produk..." target="_blank" style="color: #25D366; font-weight: bold; text-decoration: none;">
-                            Chat Sekarang &rarr;
-                        </a>
+                        <div style="font-size: 12px; color: #444; font-weight: 600; margin-bottom:2px;">WhatsApp</div>
+                        <div style="font-size: 16px; color: #25D366; line-height: 1.2;">0823-6436-8541</div>
+                        <div>
+                            <a href="https://wa.me/6282364368541?text=Halo%20Admin%20Croppy,%20saya%20mau%20tanya%20produk..." target="_blank"
+                                style="color: #25D366; font-weight: bold; text-decoration: none; font-size: 15px; display:inline-block; margin-top:8px;">
+                                Chat Sekarang &rarr;
+                            </a>
+                        </div>
                     </div>
                 </div>
 
                 <div style="display: flex; align-items: start; margin-bottom: 25px;">
-                    <div style="background: #e3f2fd; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                        <i class="fas fa-envelope" style="font-size: 24px; color: #2196F3;"></i>
+                    <div style="background: #e3f2fd; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 17px; margin-top: 2px; font-size: 19px;">
+                        ✉️
                     </div>
                     <div>
-                        <h6 style="font-weight: bold; margin: 0;">Email</h6>
-                        <p style="color: #666; margin: 5px 0;">halo@croppy.co.id</p>
+                        <div style="font-size: 12px; color: #444; font-weight: 600; margin-bottom:2px;">Email</div>
+                        <div style="font-size: 16px; color: #989898; line-height: 1.2;">crochet.happy.croppy@gmail.com</div>
                     </div>
                 </div>
 
                 <div style="display: flex; align-items: start;">
-                    <div style="background: #ffebee; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
-                        <i class="fas fa-map-marker-alt" style="font-size: 24px; color: #e91e63;"></i>
+                    <div style="background: #ffebee; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 17px; margin-top: 2px; font-size: 19px;">
+                        📍
                     </div>
                     <div>
-                        <h6 style="font-weight: bold; margin: 0;">Lokasi Workshop</h6>
-                        <p style="color: #666; margin: 5px 0;">
+                        <div style="font-size: 12px; color: #F06292; font-weight: 600; margin-bottom:2px;">Lokasi</div>
+                        <div style="font-size: 15px; color: #444; line-height: 1.65;">
                             Politeknik Caltex Riau, Jl. Umban Sari (Patin) No.1, Rumbai, Pekanbaru, Riau 28265.
-                        </p>
+                        </div>
                     </div>
                 </div>
 
@@ -62,26 +66,5 @@
             </div>
         </div>
     </div>
-
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-8 text-center">
-            <h4 style="font-weight: bold; margin-bottom: 20px;">Kirim Pesan Cepat 🚀</h4>
-            <form action="#" style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.05);">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <input type="text" class="form-control" placeholder="Nama Kamu" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <input type="email" class="form-control" placeholder="Email Kamu" style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
-                    </div>
-                </div>
-                <textarea rows="4" class="form-control mb-3" placeholder="Tulis pesanmu di sini..." style="padding: 12px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
-                <button type="button" class="btn btn-primary" style="background: #e91e63; border: none; padding: 12px 30px; font-weight: bold; border-radius: 50px; width: 100%;">
-                    Kirim Pesan
-                </button>
-            </form>
-        </div>
-    </div>
-
 </div>
 @endsection

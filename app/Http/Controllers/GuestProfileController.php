@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class GuestProfileController extends Controller
 {
@@ -14,48 +15,18 @@ class GuestProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        // Arahkan ke view yang kemarin kita buat (resources/views/guest/profile.blade.php)
         return view('guest.profile', compact('user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    // ... (method create, store, show, edit biarkan kosong atau hapus juga boleh) ...
 
     /**
      * Update the specified resource in storage.
+     * PERBAIKAN: Hapus parameter 'string $id' karena kita pakai Auth::user()
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request) 
     {
-        // 1. Validasi (Tambah validasi foto)
+        // 1. Validasi
         $request->validate([
             'phone' => 'required|numeric',
             'address' => 'required|string|max:500',
@@ -73,15 +44,15 @@ class GuestProfileController extends Controller
     
         // 2. Cek apakah user upload foto baru?
         if ($request->hasFile('avatar')) {
-            // Hapus foto lama kalau ada (opsional, biar hemat storage)
-            // if ($user->avatar && file_exists(public_path($user->avatar))) {
-            //     unlink(public_path($user->avatar));
-            // }
+            // Hapus foto lama kalau ada (opsional)
+            if ($user->avatar && file_exists(public_path($user->avatar))) {
+                @unlink(public_path($user->avatar));
+            }
     
             // Simpan foto ke folder 'public/avatars'
             $path = $request->file('avatar')->store('avatars', 'public');
             
-            // Simpan link-nya ke database (tambah '/storage/' di depannya)
+            // Simpan link-nya ke database
             $dataToUpdate['avatar'] = '/storage/' . $path;
         }
     
@@ -89,14 +60,5 @@ class GuestProfileController extends Controller
         $user->forceFill($dataToUpdate)->save();
     
         return back()->with('success', 'Profil & Foto berhasil diupdate! Kece parah! 😎✨');
-    }
-    
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

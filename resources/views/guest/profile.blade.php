@@ -111,7 +111,6 @@
 
 <div class="profile-container">
     <div style="margin-bottom: 24px; border-bottom: 2px solid #eee; padding-bottom: 12px; display:flex; align-items:center; gap:15px;">
-        <img src="{{ asset('assets-guest/img/profile-star.png') }}" alt="star" style="width:36px;height:36px; margin-right:6px; filter:drop-shadow(0 2px 7px #f8bbd088);">
         <div>
             <h2 style="color: #e91e63; font-weight: 800; font-size: 1.7rem; margin-bottom:2px;">Pengaturan Profil <span class="floating-anim">⚙️</span></h2>
             <p style="color: #8e29a8; font-size: 15px;">Kelola informasi profile, kontak, & alamat kirim kamu secara mudah & aman 🎨</p>
@@ -123,6 +122,12 @@
         <span style="font-size: 22px;">✅</span> <span style="font-weight: bold;">{{ session('success') }}</span>
     </div>
     @endif
+
+    @if(session('error'))
+<div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+    <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
+</div>
+@endif
 
     <form action="{{ route('guest.profile.update') }}" method="POST" enctype="multipart/form-data" class="profile-form" autocomplete="off">
         @csrf
@@ -197,7 +202,6 @@
 
     <!-- Fun fact & tips -->
     <div style="margin-top: 35px; background: linear-gradient(110deg, #fff3f7 60%, #ffe6e6 120%); border-radius: 14px; padding:20px 28px; display:flex; align-items:center; gap:17px; box-shadow:0 1px 9px #e91e6333;">
-        <img src="{{ asset('assets-guest/img/tips-light.png') }}" alt="Tips" style="width: 40px; height:40px;">
         <div style="font-size:15px; color:#7c3760;">
             <b>Tips: </b> Foto profil dengan gambar asli bikin admin lebih mudah mengenali pesananmu! Data pengiriman <span style="color:#e91e63;font-weight:600;">WAJIB benar</span> agar pesananmu sampai tanpa hambatan 😊
         </div>

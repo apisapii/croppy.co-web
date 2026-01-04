@@ -186,6 +186,26 @@
                             <span class="mini-badge badge-success">Dikirim 🚚</span>
                         @endif
                     </div>
+
+                    {{-- Upload & Konfirmasi Bukti Pembayaran --}}
+                    @if($order->status == 'Pending' && !$order->payment_proof)
+                        <div style="margin-top: 15px; border-top: 1px dashed #eee; padding-top: 10px;">
+                            <p style="font-size: 13px; color: #666; margin-bottom: 5px;">Belum bayar? Upload bukti transfer di sini:</p>
+                            <form action="{{ route('orders.uploadProof', $order->id) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="file" name="payment_proof" required style="font-size: 12px;">
+                                    <button type="submit" class="btn btn-sm btn-primary">Kirim Bukti 📤</button>
+                                </div>
+                            </form>
+                        </div>
+                    @elseif($order->status == 'Pending' && $order->payment_proof)
+                        <div style="margin-top: 15px; background: #e3f2fd; padding: 10px; border-radius: 5px;">
+                            <span style="color: #0d47a1; font-size: 13px;">✅ Mohon tunggu sampai admin mengkonfirmasi pesanan anda.</span>
+                            <br>
+                            <a href="{{ $order->payment_proof }}" target="_blank" style="font-size: 12px; text-decoration: underline;">Lihat Bukti Saya</a>
+                        </div>
+                    @endif
                     
                     @if($order->resi)
                         <div class="resi-container">

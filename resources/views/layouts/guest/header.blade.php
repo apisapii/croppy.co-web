@@ -13,6 +13,9 @@
                 <a href="/produk" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
                     Produk
                 </a>
+                <a href="{{ route('pages.about') }}" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
+                    About Us
+                </a>
                 <a href="{{ route('pages.contact') }}" style="color: #333; text-decoration: none; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.3s;" onmouseover="this.style.color='#e91e63'" onmouseout="this.style.color='#333'">
                     Kontak
                 </a>

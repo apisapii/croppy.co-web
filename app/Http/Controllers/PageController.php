@@ -66,4 +66,9 @@ class PageController extends Controller
     {
         return view('guest.contact');
     }
+
+    public function about()
+{
+    return view('guest.about');
+}
 }

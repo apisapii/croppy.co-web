@@ -116,6 +116,20 @@
         .orders-title { font-size: 1.2rem; }
         .address-cell { max-width: 150px; font-size: 0.85rem; }
     }
+
+    /* Bukti pembayaran modal */
+    .payment-proof-image {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px #0001;
+        border: 1px solid #eee;
+    }
+
+    .btn-payment-proof {
+        margin-left: 2px;
+        margin-right: 3px;
+    }
+
 </style>
 
 <div class="orders-container">
@@ -150,6 +164,7 @@
                 <th>Rincian Barang</th>
                 <th>Total Bayar</th>
                 <th>Status Saat Ini</th>
+                <th>Bukti</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -204,6 +219,42 @@
                         {{ $displayStatus }}
                     </span>
                 </td>
+                <td style="text-align:center;">
+                    @if($order->payment_proof)
+                        <!-- Tombol untuk menampilkan modal bukti pembayaran -->
+                        <button type="button"
+                            class="btn btn-sm btn-warning btn-payment-proof"
+                            data-toggle="modal"
+                            data-target="#modalBuktiPembayaran{{ $order->id }}"
+                            title="Lihat Bukti Pembayaran Customer">
+                            <i class="fas fa-eye"></i> Bukti
+                        </button>
+                        <!-- Modal Bukti Pembayaran -->
+                        <div class="modal fade" id="modalBuktiPembayaran{{ $order->id }}" tabindex="-1" role="dialog" aria-labelledby="buktiLabel{{ $order->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header" style="border-bottom:0;">
+                                <h5 class="modal-title" id="buktiLabel{{ $order->id }}">
+                                  Bukti Pembayaran Order #{{ $order->id }}
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body" style="text-align:center;">
+                                <img src="{{ $order->payment_proof }}" alt="Bukti Pembayaran #{{ $order->id }}" class="payment-proof-image mb-3">
+                                <br>
+                                <a href="{{ $order->payment_proof }}" target="_blank" class="btn btn-primary btn-sm mt-2">
+                                    Lihat Ukuran Penuh <i class="fas fa-external-link-alt"></i>
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    @else
+                        <span style="color:#B0B0B0;font-size:1.1em;">-</span>
+                    @endif
+                </td>
                 <td>
                     <div style="display: flex; gap: 7px; align-items: center;">
                         <form class="action-form" action="{{ route('admin.orders.update', $order->id) }}" method="POST" style="margin-right:0;">
@@ -252,7 +303,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="8" class="empty-orders">
+                <td colspan="9" class="empty-orders">
                     <i class="fas fa-clipboard-list" style="font-size:2.2em; color: #d1aeeb;"></i>
                     <br>
                     Belum ada pesanan baru. Semangat berjualan! 🚀
